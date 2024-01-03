@@ -1,17 +1,6 @@
 #setting up everything 
-from dotenv import load_dotenv
-import os
 import requests as rq
-import hashlib
-import random
-from datetime import datetime
 
-
-#loading Env's
-load_dotenv()
-
-api_key = os.getenv("API_KEY")
-api_secret = os.getenv("secret")
 cf_base_url = 'https://codeforces.com/api/'
 
 def getContestList() -> list:
@@ -25,8 +14,9 @@ def getContestList() -> list:
     return fres
 
 # pretty print conetst list
-def pp_contestlist():
-    pass
+def pp_contestlist(reslist):
+    for i in reslist:
+        print(i)
 
 if __name__ == '__main__':
-    print(getContestList())
+    pp_contestlist(getContestList())
