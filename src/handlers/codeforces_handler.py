@@ -3,7 +3,7 @@ import requests as rq
 
 cf_base_url = 'https://codeforces.com/api/'
 
-def getContestList() -> list:
+def getUpcomingContestList() -> list:
     
     fres = []
     r = rq.get(cf_base_url + 'contest.list') # Warning. Big List
@@ -19,4 +19,4 @@ def pp_contestlist(reslist):
         print(i)
 
 if __name__ == '__main__':
-    pp_contestlist(getContestList())
+    pp_contestlist(getUpcomingContestList())
