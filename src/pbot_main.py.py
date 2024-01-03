@@ -14,19 +14,16 @@ api_key = os.getenv("API_KEY")
 api_secret = os.getenv("secret")
 cf_base_url = 'https://codeforces.com/api/'
 
-def getContestList() -> list:
+def getContestList():
     
-    fres = []
     r = rq.get(cf_base_url + 'contest.list') # Warning. Big List
     for res in r.json()["result"]:
         if res["phase"] == "BEFORE":
-            fres.append(res)
-
-    return fres
+            print(res)
 
 # pretty print conetst list
 def pp_contestlist():
     pass
 
 if __name__ == '__main__':
-    print(getContestList())
+    getContestList()
