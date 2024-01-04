@@ -21,7 +21,7 @@ async def showContestList():
         print("Channel not found.")
 
 async def schedule():
-    while cron.is_now('* * * * *'):
+    while cron.is_now('40 23 * * *'):  # TODO: Adjust Timings. Currently tested on the cron string '* * * * *'
         await showContestList()
 
 @bot.event
