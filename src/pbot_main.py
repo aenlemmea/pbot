@@ -1,8 +1,9 @@
 import disnake
-from disnake.ext import commands
 import os
-from dotenv import load_dotenv
 import asyncio
+
+from dotenv import load_dotenv
+from disnake.ext import commands
 from datetime import datetime
 
 from handlers.codeforces_handler import getUpcomingContestList
