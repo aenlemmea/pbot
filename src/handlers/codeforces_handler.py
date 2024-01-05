@@ -1,7 +1,10 @@
 # setting up everything
 
-
+import json
+import pprint
 import requests as rq
+
+from model.contest import Contest
 
 cf_base_url = "https://codeforces.com/api/"
 
@@ -11,7 +14,17 @@ async def getUpcomingContestList():
     r = rq.get(cf_base_url + "contest.list")  # Warning. Big List
     for res in r.json()["result"]:
         if res["phase"] == "BEFORE":
-            fres.append(res)
+            deserialized_contest = Contest(
+                res["id"],
+                res["name"],
+                res["type"],
+                res["phase"],
+                res["frozen"],
+                res["durationSeconds"],
+                res["startTimeSeconds"],
+                res["relativeTimeSeconds"],
+            )
+            fres.append(deserialized_contest)
 
     return fres
 
@@ -19,8 +32,4 @@ async def getUpcomingContestList():
 # TODO: pretty print conetst list
 def pp_contestlist(reslist):
     for i in reslist:
-        print(i)
-
-
-if __name__ == "__main__":
-    pp_contestlist(getUpcomingContestList())
+        pprint(i)

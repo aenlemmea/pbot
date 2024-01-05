@@ -2,7 +2,8 @@ import disnake
 from disnake.ext import commands
 import os
 from dotenv import load_dotenv
-import pycron as cron
+import asyncio
+from datetime import datetime
 
 from handlers.codeforces_handler import getUpcomingContestList
 
@@ -15,18 +16,29 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 async def showContestList():
     fres_prime = await getUpcomingContestList()
-    channel = bot.get_channel(1189825652824752189)
-    if channel:
-        await channel.send(fres_prime)
-    else:
-        print("Channel not found.")
+    channel = bot.get_channel(int(os.getenv("ANNOUNCEMENT_CHANNEL_ID")))
+
+    for f in fres_prime:
+        embed = disnake.Embed(
+            title=f.name,
+            description=f.id,
+            url="https://codeforces.com/contest/" + str(f.id),
+            color=disnake.Color.blurple(),
+            timestamp=datetime.fromtimestamp(f.startTimeSeconds),
+        )
+
+        if channel:
+            await channel.send(embed=embed)
+        else:
+            print("Channel not found.")
 
 
 async def schedule():
-    while cron.is_now(
-        "40 23 * * *"
-    ):  # TODO: Adjust Timings. Currently tested on the cron string '* * * * *'
+    while True:
         await showContestList()
+        await asyncio.sleep(
+            43200
+        )  # pycron -> run at a specific time, this approach -> run after 12 (12 * 60 * 60 = 43200) hours each.
 
 
 @bot.event
