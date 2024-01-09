@@ -24,6 +24,6 @@ Contributing Setup:
 	6. Run the main file with pbot_main.py
 
 Contributors:
-	Shankhadeep Mandal 
-	Subhojit Mandal
+	Shankhadeep Mandal (Maintainer of Branch: skdev)
+	Subhojit Mandal	(Maintainer of Branch: subdev)
 
