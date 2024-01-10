@@ -1,0 +1,4 @@
+phenenv/
+__pycache__/
+.env
+idea.txt
