@@ -20,7 +20,7 @@ async def getUpcomingContestListchef():
 
         # Use a more robust XPath
         xpath_tbody = "/html/body/div[1]/div/div[3]/div/div/div[3]/div[2]/div[2]/div/div[2]/table/tbody"
-
+        data=[]
         try:
             # Wait for the tbody element to be present
             wait = WebDriverWait(driver, 10)
@@ -30,7 +30,7 @@ async def getUpcomingContestListchef():
             rows = tbody_element.find_elements(By.TAG_NAME, 'tr')
 
             # Iterate through each row and print the text content of cells
-            data=[]
+            
             for row in rows:
                 cells = row.find_elements(By.TAG_NAME, 'td')
                 row_data = [cell.text.strip() for cell in cells]

@@ -1,53 +1,35 @@
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import chromedriver_autoinstaller
 
-# Automatically install and get the path of chromedriver that matches the installed chrome browser version
-chromedriver_autoinstaller.install()
+# Set up the Selenium WebDriver (make sure you have chromedriver installed)
+driver = webdriver.Chrome()
 async def getUpcomingContestListgfg():
-    # Use ChromeDriverManager to handle the downloading and installation of chromedriver
-    with webdriver.Chrome() as driver:
-        website = 'https://clist.by/resource/geeksforgeeks.org/'
-        driver.get(website)
+    # Open the website
+    driver.get("https://clist.by/?resource=126&view=list&group=no&status=coming")
 
-        # Wait for the page to load completely
-        WebDriverWait(driver, 10).until(
-            lambda driver: driver.execute_script("return document.readyState") == "complete"
-        )
+    # Wait for the page to load (you may need to adjust the waiting time)
+    driver.implicitly_wait(10)
 
-        # Use a more robust XPath
-        xpath_tbody = "/html/body/div[4]/div/div[3]/div[4]/div/table/tbody"
+    # Find all div elements with class 'contest row coming'
+    contest_elements = driver.find_elements(By.CSS_SELECTOR, 'div.contest.row.coming')
 
-        try:
-            # Wait for the tbody element to be present
-            wait = WebDriverWait(driver, 10)
-            tbody_element = wait.until(EC.presence_of_element_located((By.XPATH, xpath_tbody)))
+    # Initialize a list to store dictionaries
+    contests_data = []
 
-            # Find all rows inside the tbody
-            rows = tbody_element.find_elements(By.TAG_NAME, 'tr')
+    # Extract and store data from each contest element
+    for contest in contest_elements:
+        data = {
+            "Start Time": contest.find_element(By.CSS_SELECTOR, 'div.start-time').text.strip(),
+            "Duration": contest.find_element(By.CSS_SELECTOR, 'div.duration').text.strip(),
+            "Time Left": contest.find_element(By.CSS_SELECTOR, 'div.timeleft').text.strip(),
+            "Event Title": contest.find_element(By.CSS_SELECTOR, 'span.contest_title').text.strip(),
+        }
+        contests_data.append(data)
 
-            # Iterate through each row and print the text content of cells
-            data=[]
-            for row in rows:
-                cells = row.find_elements(By.TAG_NAME, 'td')
-                row_data = [cell.text.strip() for cell in cells]
-                #print(row_data)
-                data.append(row_data)
+    # Close the WebDriver
+    driver.quit()
 
-        except TimeoutException:
-            print("Timed out waiting for the tbody element to be present")
-        
-
-        columns = ['Date', 'Event']
-
-        # Deserialize data into a list of dictionaries
-        deserialized_data = [dict(zip(columns, row)) for row in data]
-        
-        # Print the deserialized data
-        #for row in deserialized_data:
-         #   print(row)
-        filtered_data = [item for item in deserialized_data if item]
-        return(filtered_data)
+    # Print the entire list of dictionaries
+    '''for contest_data in contests_data:
+        print(contest_data)'''
+    return(contests_data)    
