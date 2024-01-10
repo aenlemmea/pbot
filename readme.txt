@@ -16,9 +16,14 @@ Contributing Setup:
 		`.\phenenv\Scripts\Activate.ps1`
 	3. Install requirements:
 		`pip install -r requirements`
-	4. Develop!
+	4. Create a `.env` file in the root directory 
+		i.e, a file outside of `src/` directorty.
+	5. Add the key and values for `ANNOUNCEMENT_CHANNEL_ID`
+		where the bot notifies, and `DISCORD_TOKEN`
+		with your discord token.
+	6. Run the main file with pbot_main.py
 
 Contributors:
-	Shankhadeep Mandal 
-	Subhojit Mandal
+	Shankhadeep Mandal (Maintainer of Branch: skdev)
+	Subhojit Mandal	(Maintainer of Branch: subdev)
 
