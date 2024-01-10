@@ -3,3 +3,4 @@ pbotenv/
 __pycache__/
 idea.txt
 .env
+*.pyc

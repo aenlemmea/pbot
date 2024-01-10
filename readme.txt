@@ -3,7 +3,7 @@ pbot
 
 General purpose bot for discord with functionality like:
 	1. Notify for upcoming programming contests for 
-		codechef, codeforces, geeksforgeeks.
+		codechef, codeforces, geeksforgeeks.             [=DONE=]
 	2. Send math questions for probability topic.
 	3. Interface to chatGPT. 
 
